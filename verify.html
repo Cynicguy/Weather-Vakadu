@@ -3,67 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <title>Verify OTP</title>
-  <style>
-    body { font-family: Arial, sans-serif; padding: 40px; }
-    .form-group { margin-bottom: 15px; }
-    input { width: 100%; padding: 8px; margin-top: 5px; }
-    #timer { font-weight: bold; color: green; margin-top: 10px; }
-    button { padding: 10px 20px; margin-top: 15px; }
-  </style>
+  <script defer src="script.js"></script>
 </head>
 <body>
-
   <h2>Verify OTP</h2>
-  <p>We sent an OTP to <span id="show-phone"></span></p>
+  <form id="otp-form">
+    <label>Enter OTP sent to your number:</label>
+    <input type="number" id="otp" required><br><br>
 
-  <div class="form-group">
-    <label for="otp">Enter OTP</label>
-    <input type="number" id="otp" placeholder="Enter the 6-digit OTP">
-  </div>
+    <button type="submit">Verify OTP</button>
+  </form>
 
-  <div id="timer">Time remaining: 60 seconds</div>
-  <button onclick="verifyOTP()">Verify OTP</button>
-
-  <script>
-    const phone = localStorage.getItem("signup_phone");
-    const name = localStorage.getItem("signup_name");
-    document.getElementById("show-phone").innerText = phone;
-
-    let seconds = 60;
-    const timerEl = document.getElementById("timer");
-
-    const interval = setInterval(() => {
-      seconds--;
-      if (seconds <= 0) {
-        clearInterval(interval);
-        timerEl.innerText = "OTP expired. Please go back and request again.";
-      } else {
-        timerEl.innerText = `Time remaining: ${seconds} seconds`;
-      }
-    }, 1000);
-
-    async function verifyOTP() {
-      const otp = document.getElementById('otp').value;
-      if (!otp || otp.length < 4) {
-        alert("Please enter a valid OTP.");
-        return;
-      }
-
-      const response = await fetch('http://localhost:3000/verify-otp', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ phone, otp, name })
-      });
-
-      const result = await response.json();
-      if (result.success) {
-        alert("Profile Created Successfully!");
-        localStorage.clear();
-      } else {
-        alert("OTP verification failed.");
-      }
-    }
-  </script>
-
+  <p id="timer">01:00</p>
 </body>
 </html>

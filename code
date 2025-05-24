@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Weather Reporter</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    .header {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .place-btn {
+      padding: 10px 20px;
+      background-color: #0e7c86;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .calendar {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 10px;
+      margin-top: 30px;
+    }
+
+    .day {
+      padding: 10px;
+      text-align: center;
+      background-color: #eee;
+      border-radius: 5px;
+    }
+
+    .footer {
+      margin-top: 30px;
+    }
+
+    #timer {
+      font-weight: bold;
+    }
+
+    .login-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 10px 15px;
+      background-color: #005bbb;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+  </style>
+</head>
+<body>
+
+  <h2>Weather Reporting Portal</h2>
+
+  <div class="header">
+    <button class="place-btn">Vakadu</button>
+    <button class="place-btn">Kondapuram</button>
+    <button class="place-btn">Vidyanagar</button>
+  </div>
+
+  <h3>Current Month Report Calendar</h3>
+  <div class="calendar" id="calendar"></div>
+
+  <div class="footer">
+    <p>Amount of time the user spent here is: <span id="timer">0s</span></p>
+  </div>
+
+  <button class="login-button">Login</button>
+
+  <script>
+    // === Timer Script ===
+    let seconds = 0;
+    const timerEl = document.getElementById("timer");
+    setInterval(() => {
+      seconds++;
+      timerEl.textContent = seconds + "s";
+    }, 1000);
+
+    // === Calendar Generator ===
+    const calendarEl = document.getElementById("calendar");
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth();
+
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+    for (let day = 1; day <= today.getDate(); day++) {
+      const dayDiv = document.createElement("div");
+      dayDiv.className = "day";
+      dayDiv.textContent = day;
+      calendarEl.appendChild(dayDiv);
+    }
+  </script>
+</body>
+</html>
